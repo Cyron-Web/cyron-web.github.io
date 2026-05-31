@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no"/>
+<title>Cyron</title>
+<link rel="stylesheet" href="/resources/css/style.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github-dark-dimmed.min.css"/>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/marked/9.1.6/marked.min.js"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=JetBrains+Mono:wght@300;400;500&family=Syne:wght@400;700;800&display=swap" rel="stylesheet"/>
+</style>
+</head>
+<body>
+<div id="app">
+
+  <aside id="sidebar">
+    <div class="sb-header">
+      <div class="sb-brand">
+        <div class="brand-info">
+          <h1>CYRON</h1>
+          <span>Neural Interface</span>
+        </div>
+      </div>
+      <button class="btn-new-chat" id="btn-new-chat">
+        <svg viewBox="0 0 24 24"><path d="M19 13H13v6h-2v-6H5v-2h6V5h2v6h6v2z"/></svg>
+        Nuevo chat
+      </button>
+
+      <div class="sb-search-wrap">
+        <svg class="sb-search-icon" viewBox="0 0 24 24">
+          <path d="M15.5 14h-.79l-.28-.27A6.471 6.471 0 0 0 16 9.5 6.5 6.5 0 1 0 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/>
+        </svg>
+        <input id="chat-search" type="text" placeholder="Buscar chats…" autocomplete="off" spellcheck="false"/>
+        <button class="sb-search-clear" id="search-clear" title="Limpiar">✕</button>
+      </div>
+    </div>
+
+    <div id="chat-list">
+      <div class="chat-section-title" id="section-recientes" style="display:none">Recientes</div>
+      <div id="chat-items"></div>
+      <div class="search-empty" id="search-empty">Sin resultados</div>
+    </div>
+
+    <div class="sb-footer">
+      <button class="memory-btn" id="btn-memory">
+        <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 3c1.66 0 3 1.34 3 3s-1.34 3-3 3-3-1.34-3-3 1.34-3 3-3zm0 14.2c-2.5 0-4.71-1.28-6-3.22.03-1.99 4-3.08 6-3.08 1.99 0 5.97 1.09 6 3.08-1.29 1.94-3.5 3.22-6 3.22z"/></svg>
+        Perfil y Memoria
+      </button>
+    </div>
+  </aside>
+
+  <div id="sidebar-overlay"></div>
+
+  <main id="main">
+    <div id="topbar">
+      <div class="topbar-left">
+        <button id="btn-toggle-sidebar">
+          <svg viewBox="0 0 24 24"><path d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z"/></svg>
+        </button>
+        <span id="chat-title-display">Nuevo chat</span>
+      </div>
+      <div class="topbar-right">
+
+        <div style="position:relative;">
+          <button id="btn-export" title="Exportar chat" disabled>
+            <svg viewBox="0 0 24 24"><path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"/></svg>
+          </button>
+          <div class="export-dropdown" id="export-dropdown">
+            <button class="export-option" id="export-txt">
+              <svg viewBox="0 0 24 24"><path d="M14 2H6c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V8l-6-6zm2 16H8v-2h8v2zm0-4H8v-2h8v2zm-3-5V3.5L18.5 9H13z"/></svg>
+              Exportar como .txt
+            </button>
+            <button class="export-option" id="export-md">
+              <svg viewBox="0 0 24 24"><path d="M14 2H6c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V8l-6-6zm2 16H8v-2h8v2zm0-4H8v-2h8v2zm-3-5V3.5L18.5 9H13z"/></svg>
+              Exportar como .md
+            </button>
+          </div>
+        </div>
+
+        <div class="status-pill" id="status-pill">
+          <span class="status-dot" id="status-dot"></span>
+          <span id="status-text">online</span>
+        </div>
+        <span class="model-tag">T-X7.o</span>
+      </div>
+    </div>
+
+    <div id="messages-wrap">
+      <div id="messages">
+        <div id="empty-state">
+          <img class="empty-glyph" src="https://orvex-web.github.io/resources/multimedia/image/cyron-orvex.gif" alt="Cyron" />
+          <div class="empty-title" id="empty-greeting">Hola, soy Cyron</div>
+          <div class="empty-subtitle">Listo para asistirte<br/>¿En qué puedo ayudarte hoy?</div>
+        </div>
+      </div>
+
+      <button id="btn-scroll-bottom" title="Ir al final">
+        <svg viewBox="0 0 24 24"><path d="M20 12l-1.41-1.41L13 16.17V4h-2v12.17l-5.58-5.59L4 12l8 8 8-8z"/></svg>
+      </button>
+    </div>
+
+    <div id="chips">
+      <div class="chips-label">Sugerencias</div>
+      <div class="chips-row" id="chips-row"></div>
+    </div>
+
+    <div id="input-bar">
+      <textarea id="user-input" rows="1" placeholder="Escribe un mensaje…" maxlength="8000"></textarea>
+      <button id="btn-send" title="Enviar">
+        <svg viewBox="0 0 24 24"><path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"/></svg>
+      </button>
+    </div>
+  </main>
+</div>
+
+<div class="modal-overlay hidden" id="memory-modal">
+  <div class="modal">
+    <div class="modal-header">
+      <div class="modal-title">Perfil & Memoria</div>
+      <button class="modal-close" id="close-memory">✕</button>
+    </div>
+    <div class="field-group">
+      <div class="field-label">Tu nombre</div>
+      <input class="field-input" id="mem-name" type="text" placeholder="¿Cómo te llamas?"/>
+    </div>
+    <div class="field-group">
+      <div class="field-label">Ocupación / Rol</div>
+      <input class="field-input" id="mem-role" type="text" placeholder="Desarrollador, diseñador, estudiante…"/>
+    </div>
+    <div class="field-group">
+      <div class="field-label">Preferencias e intereses</div>
+      <textarea class="field-input" id="mem-prefs" placeholder="Intereses, tecnologías favoritas, cómo prefieres que responda…"></textarea>
+    </div>
+    <button class="btn-primary" id="save-memory">Guardar perfil</button>
+    <div style="margin-top:16px;padding-top:16px;border-top:1px solid var(--border);">
+      <button class="btn-clear-history" id="btn-clear-history">Borrar todo el historial de chats</button>
+    </div>
+  </div>
+</div>
+
+<div class="modal-overlay hidden" id="rename-modal">
+  <div class="modal">
+    <div class="modal-header">
+      <div class="modal-title">Renombrar chat</div>
+      <button class="modal-close" id="close-rename">✕</button>
+    </div>
+    <input id="rename-input" type="text" placeholder="Nombre del chat…" maxlength="50"/>
+    <div class="rename-actions">
+      <button class="btn-secondary" id="rename-cancel">Cancelar</button>
+      <button class="btn-primary" id="rename-confirm" style="flex:1;margin-top:0;">Guardar</button>
+    </div>
+  </div>
+</div>
+
+<div class="modal-overlay hidden" id="confirm-modal">
+  <div class="modal">
+    <div class="modal-header">
+      <div class="modal-title">Eliminar chat</div>
+      <button class="modal-close" id="close-confirm">✕</button>
+    </div>
+    <p class="confirm-text">¿Estás seguro de que quieres eliminar este chat? Esta acción no se puede deshacer.</p>
+    <div class="confirm-actions">
+      <button class="btn-secondary" id="confirm-cancel">Cancelar</button>
+      <button class="btn-danger" id="confirm-delete">Eliminar</button>
+    </div>
+  </div>
+</div>
+
+<div id="toast"></div>
+  <script src="/resources/js/script.js"></script>
+</body>
+</html>
