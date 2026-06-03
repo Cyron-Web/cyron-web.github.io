@@ -362,7 +362,6 @@ body::before {
 }
 .edit-add-img-btn:hover{border-color:var(--accent);color:var(--accent);}
 
-/* ── EDIT WARNING NOTICE ── */
 .edit-notice{display:flex;align-items:flex-start;gap:10px;padding:10px 14px;background:rgba(56,189,248,.06);border:1px solid rgba(56,189,248,.18);border-radius:10px;font-family:var(--mono);font-size:11px;color:var(--text-2);line-height:1.5;margin-bottom:2px;}
 .edit-notice-icon{width:14px;height:14px;fill:var(--accent);flex-shrink:0;margin-top:1px;}
 .edited-badge{display:none;}
@@ -466,7 +465,6 @@ body::before {
 #btn-send.stop-mode{background:linear-gradient(135deg,var(--danger),#c0392b);box-shadow:0 4px 20px rgba(248,113,113,.25);}
 #btn-send.stop-mode:hover{transform:scale(1.05);box-shadow:0 6px 28px rgba(248,113,113,.35);}
 
-/* ══ MODALS ══ */
 .modal-overlay{position:fixed;inset:0;z-index:1000;background:rgba(3,5,10,.85);backdrop-filter:blur(8px);display:flex;align-items:center;justify-content:center;animation:fadeIn .2s;}
 @keyframes fadeIn{from{opacity:0;}to{opacity:1;}}
 .modal-overlay.hidden{display:none;}
